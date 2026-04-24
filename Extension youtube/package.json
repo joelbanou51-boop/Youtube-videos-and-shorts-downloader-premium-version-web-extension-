@@ -1,0 +1,14 @@
+{
+  "name": "yt-downloader-pro",
+  "version": "1.0.0",
+  "description": "Extension Chrome/Edge pour télécharger des vidéos YouTube",
+  "private": true,
+  "scripts": {
+    "setup": "node setup.js"
+  },
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "0.12.10",
+    "@ffmpeg/core": "0.12.6"
+  }
+}
+

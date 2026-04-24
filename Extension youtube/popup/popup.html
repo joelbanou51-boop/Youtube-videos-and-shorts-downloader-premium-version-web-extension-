@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTuDo</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+
+  <!-- ── Header ─────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header__logo">
+      <div class="logo-wrapper">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" fill="url(#logoGradient)"/>
+          <path d="M10 8l6 4-6 4V8z" fill="white"/>
+          <path d="M12 17v-3m0 3l-2-2m2 2l2-2" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="logoGradient" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#ff4400"/>
+              <stop offset="1" stop-color="#ff8800"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="header__title">YouTuDo</span>
+    </div>
+    <div id="videoInfo" class="header__video-info" title="">
+      <span id="videoTitle" class="header__video-title"></span>
+    </div>
+  </header>
+
+  <!-- ── État de chargement ──────────────────────────────────────── -->
+  <div id="loadingState" class="state state--loading">
+    <div class="spinner"></div>
+    <p>Récupération des formats…</p>
+  </div>
+
+  <!-- ── Erreur ─────────────────────────────────────────────────── -->
+  <div id="errorState" class="state state--error hidden">
+    <div class="state__icon">⚠️</div>
+    <p id="errorMessage">Erreur</p>
+    <textarea id="errorLog" class="error-log hidden" readonly></textarea>
+    <p class="state__hint">Ouvrez une vidéo YouTube puis relancez l'extension.</p>
+  </div>
+
+  <!-- ── Contenu principal ──────────────────────────────────────── -->
+  <main id="mainContent" class="hidden">
+
+    <!-- Miniature -->
+    <div class="video-preview">
+      <img id="videoThumbnail" src="" alt="Miniature" class="video-preview__img">
+      <div id="videoDurationBadge" class="video-preview__duration hidden"></div>
+    </div>
+
+    <!-- Onglets filtres -->
+    <nav class="tabs" id="filterTabs">
+      <button class="tab tab--active" data-filter="all">Tous</button>
+      <button class="tab" data-filter="muxed">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        Vidéo+Audio
+      </button>
+      <button class="tab" data-filter="video-only">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6H8C5.79 6 4 7.79 4 10v4c0 2.21 1.79 4 4 4h8c2.21 0 4-1.79 4-4v-4c0-2.21-1.79-4-4-4zm-5 8.5v-5l4 2.5-4 2.5z"/></svg>
+        Vidéo seul
+      </button>
+      <button class="tab" data-filter="audio-only">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        Audio seul
+      </button>
+    </nav>
+
+    <!-- Liste des formats -->
+    <div id="formatList" class="format-list"></div>
+  </main>
+
+  <!-- ── Overlay de progression FFmpeg ──────────────────────────── -->
+  <div id="progressOverlay" class="progress-overlay hidden">
+    <div class="progress-card">
+      <div class="progress-card__icon">⚡</div>
+      <h3 class="progress-card__title">Fusion en cours</h3>
+      <p id="progressText" class="progress-card__text">Initialisation…</p>
+      <div class="progress-bar">
+        <div id="progressBar" class="progress-bar__fill" style="width:0%"></div>
+      </div>
+      <p id="progressPercent" class="progress-card__percent">0%</p>
+      
+      <!-- Bouton d'annulation -->
+      <button id="cancelBtn" class="btn-cancel">
+          Arrêter le téléchargement
+      </button>
+    </div>
+  </div>
+
+  </div><!-- fin app-container -->
+  <script src="popup.js"></script>
+</body>
+</html>
+
